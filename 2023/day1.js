@@ -1,4 +1,4 @@
-// take the first and last number contained in the string and add the numbers as strings together
+// We take the first and last number contained in the string and add the numbers as strings together
 function addNumbers(str) {
     let first = "";
     let last = "";
@@ -37,7 +37,7 @@ function findAndAddNumbers(string) {
         eight: "8",
         nine: "9"
     };
-    validNumbersArr = Object.keys(validNumbersObj);
+    const validNumbersArr = Object.keys(validNumbersObj);
 
     function containsNumberWord(string) {
   
@@ -50,32 +50,26 @@ function findAndAddNumbers(string) {
     }
 
     lettersUntilNumber = "";
-    // loop through the string until lettersUntilNumber is equal to a valid number from validNumbersArr
+    // loop through the string until lettersUntilNumber is equal to a valid number from validNumbers
     for (let i = 0; i < string.length; i++) {
         lettersUntilNumber += string[i];
         number = containsNumberWord(lettersUntilNumber);
-        if (number) {
+        if (number || (!isNaN(string[i]))) {
             // console.log("number: " + number);
-            first = validNumbersObj[number];
-            break;
-        } else if (!isNaN(string[i])) {
-            first = string[i];
+            first = validNumbersObj[number] || string[i];
             break;
         }
     }
 
     lettersUntilNumber = "";
-    // loop through the string until lettersUntilNumber is equal to a valid number from validNumbersArr
+    // loop through from the end of string until lettersUntilNumber is equal to a valid number from validNumbers
     for (let i = string.length - 1; i >= 0; i--) {
         lettersUntilNumber = string[i] + lettersUntilNumber;
 
         number = containsNumberWord(lettersUntilNumber);
-        if (number) {
+        if (number || (!isNaN(string[i]))) {
             // console.log("number: " + number);
-            last = validNumbersObj[number];
-            break;
-        } else if (!isNaN(string[i])) {
-            last = string[i];
+            last = validNumbersObj[number] || string[i];
             break;
         }
     }
@@ -90,6 +84,7 @@ const input = fs.readFileSync("C:/Advent-of-Code/2023/input.txt", "utf-8");
 // split the input into an array of strings
 const arr = input.split("\n");
 
+// Part 1
 let result = 0;
 
 // loop through the array and add the numbers together
@@ -97,15 +92,14 @@ for (let i = 0; i < arr.length; i++) {
     result += Number(addNumbers(arr[i]));
 }
 
-// print the result
-console.log(result);
+console.log("part 1: " + result);
 
 // Part 2
 result = 0;
 
-// loop through the array and add the numbers together
+// loop through the array, find then add the numbers together
 for (let i = 0; i < arr.length; i++) {
     result += Number(findAndAddNumbers(arr[i]));
 }
 
-console.log(result);
+console.log("part 2: " + result);
